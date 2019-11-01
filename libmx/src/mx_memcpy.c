@@ -2,8 +2,8 @@
 
 void *mx_memcpy(void *restrict dst, const void *restrict src, size_t n) {
 	
-	char *dt = dst;
-	const char *sc = src;
+	unsigned char *dt = dst;
+	unsigned const char *sc = src;
 
 	while(n--)
 		*dt++ = *sc++;
@@ -15,6 +15,7 @@ int main() {
     void *restrict b = malloc(5);
 	const void *restrict src = malloc(5);
 	src = "0123";
-    mx_memcpy(b, src, 5);
-    printf("%s", b);
-}*/
+    mx_memcpy(b, src, 3);
+    printf("%s \n", b);
+	printf("%s \n", mx_memcpy(b,src, 3));
+} */

@@ -6,6 +6,7 @@
 #include <stdlib.h>
 #include <stdbool.h>
 #include <wchar.h>
+#include <malloc/malloc.h>
 
 // Extra pack
 

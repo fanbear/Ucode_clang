@@ -6,11 +6,17 @@
 #include <stdlib.h>
 #include <stdbool.h>
 #include <wchar.h>
+#include <malloc/malloc.h>
 
 // Extra pack
 
-char *mx_strchr(const char *str, int ch);
+bool mx_isalpha(int c);
+bool mx_isupper(int c);
+bool mx_islower(int c);
+bool mx_isspace(char c);
+bool mx_isdigit(int c);
 int mx_strncmp(const char *s1, const char *s2, size_t n);
+char *mx_strchr(const char *str, int ch);
 
 // Utils pack
 
@@ -46,7 +52,7 @@ char *mx_strcat(char *restrict s1, const char *restrict s2);
 char *mx_strstr(const char *haystack, const char *needle);
 int mx_get_substr_index(const char *str, const char *sub);
 int mx_count_substr(const char *str, const char *sub);
-int mx_count_words(const char *str);
+int mx_count_words(const char *str, char c);
 char *mx_strnew(const int size);
 char *mx_strtrim(const char *str);
 char *mx_del_extra_spaces(const char *str);

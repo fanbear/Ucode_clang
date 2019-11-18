@@ -28,7 +28,7 @@ void mx_create_matrix(int ***matrix, char **set, char **arrarr) {
 	}
 	i = 0;
 	while(set[i]) {
-		// mx_printchar('\n');
+
 		int j = 0;
 		while(arrarr[j]) {
 			if(mx_strcmp(set[i], arrarr[j]) == 0) {

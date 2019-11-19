@@ -46,14 +46,12 @@ static void mx_parserr(char *file) {
 	mx_del_strarr(&lines);
 }
 
-void mx_errors(int argc, char **argv) {
+void mx_errors(int argc, char *file, char **argv) {
 
 	if (argc != 2) {
 		mx_printerr("usage: ./pathfinder [filename]\n");
 		exit(EXIT_FAILURE);
 	}
-	char *file = mx_file_to_str(argv[1]);
-
 	if (!file) {
 		 mx_printerr("error: file ");
 		 mx_printerr(argv[1]);
@@ -67,5 +65,4 @@ void mx_errors(int argc, char **argv) {
 		exit(EXIT_FAILURE);
 	}
 	mx_parserr(file);
-	mx_strdel(&file);
 }

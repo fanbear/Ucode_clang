@@ -1,7 +1,14 @@
 #include "path.h"
 
+
 int main(int argc, char *argv[]) {
-	mx_errors(argc, argv);
-	mx_parse(argv);
+	int **matrix = NULL;
+	char **set = NULL;
+	char *file = mx_file_to_str(argv[1]);
+
+	mx_errors(argc, file, argv);
+	mx_parse(file, &matrix, &set);
+	// mx_print_strarr(set, "\n");
+	// mx_print_mat(matrix, set);
 	return 0;
 }

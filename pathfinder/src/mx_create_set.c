@@ -45,13 +45,15 @@ static void mx_set(char ***set, char ***arrarr) {
 
 	while(*arr) {
 		if (mx_isdigit(**arr)) arr++;
-		flag = mx_flag(*arr, set1);
-		if (flag != 0) arr++;
-		if (flag == 0) {
-			set1[i] = mx_strdup(*arr);
-			i++;
+		if (*arr) {
+			flag = mx_flag(*arr, set1);
+			if (flag != 0) arr++;
+			if (flag == 0) {
+				set1[i] = mx_strdup(*arr);
+				i++;
+			}
+			arr++;
 		}
-		arr++;
 	}
 	set1[i] = NULL;
 }
@@ -59,6 +61,5 @@ static void mx_set(char ***set, char ***arrarr) {
 void mx_create_set(char ***set, char ***arrarr, char *nIslands) {
 	int count = mx_count_set(*arrarr, nIslands);
 	*set = (char **)malloc((count + 1) * sizeof(char *));
-
 	mx_set(&(*set), &(*arrarr));
 }

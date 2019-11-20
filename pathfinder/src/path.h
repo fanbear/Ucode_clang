@@ -16,5 +16,6 @@ void mx_create_arrarr(char **lines, char ***arrarr);
 void mx_create_set(char ***set, char ***arrarr, char *nIslands);
 int **mx_create_matrix(char **set, char **arrarr);
 void mx_print_mat(int **mat, char **set);
+// void mx_algo(int **matrix, char **set);
 
 #endif

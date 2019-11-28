@@ -94,11 +94,18 @@ int mx_list_size(t_list *list);
 t_list *mx_sort_list(t_list *lst, bool (*cmp)(void *, void *));
 
 
-typedef struct s_path {
+typedef struct s_island {
 	int currentIsl;
 	int distTo;
+	struct s_path *path;
+	struct s_island *next;
+}		t_island;
+
+typedef struct s_path {
+	char *bondIsl;
+	char *bondDist;
 	struct s_path *next;
-}		t_path;
+}       t_path;
 
 void mx_errors(int argc, char *file, char **argv);
 void mx_parse(char *fd, int ***matrix, char ***set);

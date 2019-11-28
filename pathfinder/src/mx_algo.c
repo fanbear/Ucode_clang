@@ -1,18 +1,19 @@
 #include "path.h"
 
-static t_path *create_path(int isl, int dist) {
+static t_island *create_path(int isl, int dist) {
 
-	t_path *node = (t_path *)malloc(1 * sizeof(t_list));
+	t_island *node = (t_island *)malloc(1 * sizeof(t_list));
 
 	node->currentIsl = isl;
 	node->distTo = dist;
+	node->path = NULL;
 	node->next = NULL;
 	return node;
 }
 
-static void push_back_path(t_path **path, int isl, int dist) {
-	t_path *new = create_path(isl, dist);
-	t_path *last = *path;
+static void push_back_path(t_island **path, int isl, int dist) {
+	t_island *new = create_path(isl, dist);
+	t_island *last = *path;
 
 	if (*path == NULL) {
 		*path = new;
@@ -24,7 +25,7 @@ static void push_back_path(t_path **path, int isl, int dist) {
 	return;
 }
 
-static void pop_front_path(t_path **head) {
+static void pop_front_path(t_island **head) {
     if (!head || !(*head)) return;
 
     if ((*head)->next == NULL) {
@@ -33,7 +34,7 @@ static void pop_front_path(t_path **head) {
         return;
     }
     else {
-        t_path *p = (*head)->next;
+        t_island *p = (*head)->next;
         free(*head);
         *head = p;
     }
@@ -44,74 +45,41 @@ static void pop_front_path(t_path **head) {
 
 
 static void deixtra(int **matrix, char **set, int root, int size) {
-	// char *path = mx_strdup(mx_itoa(root));
-	int dist = 0;
-	// int flag = 0;
-	// int dist1 = 0;
-	// t_path *visited = NULL;
-	t_path *unvisited = NULL;
+	t_island *unvisited = NULL; // лист
 
-	mx_print_strarr(set, "\n");
-	for (int i = root; i < size; i++) {
+	for (int i = root; i < size; i++)
 		push_back_path(&unvisited, i, 0);  // заполнение пустыми нодами
-	}
-
-
-	unvisited->distTo = 0;
 
 	for (int isl1 = root; isl1 < size; isl1++) {
-		t_path *head = unvisited;
-		t_path *current = unvisited;
+		t_island *head = unvisited;
+		t_island *current = unvisited;
 
-		while(current->currentIsl != isl1) current = current->next;
-		while(head->currentIsl != isl1) head = head->next; // поиск отправной точки
-		for (int isl2 = isl1+1; head->next != NULL; isl2++) {
+		while(current->currentIsl != isl1)
+			current = current->next;
+		while(head->currentIsl != isl1+1 && isl1+1 < size)
+			head = head->next; // поиск отправной точки
 
-			if (matrix[current->currentIsl][isl2] != 0 && head->next->distTo) {
-				if (head->distTo + matrix[isl1][isl2] < head->next->distTo) {
-					head->next->distTo = current->distTo + matrix[isl1][isl2];
-					// flag = head->next->currentIsl;
-					// if (flag != head->next->currentIsl) {
-					// 	path = mx_strjoin(path, "-");
-					// 	path = mx_strjoin(path, mx_itoa(head->next->currentIsl));
-					// }
-					// mx_printstr("cur path = ");
-					// mx_printstr(path);
-				}
-				// else if (head->distTo + matrix[isl1][isl2] == head->next->distTo)
+		for (int isl2 = isl1+1; head && isl2 < size; isl2++) {
 
-			} else if (matrix[current->currentIsl][isl2] != 0 && !head->next->distTo) {
-				head->next->distTo = current->distTo + matrix[isl1][isl2];
-					// path = mx_strjoin(path, "-");
-					// path = mx_strjoin(path, mx_itoa(head->next->currentIsl));
-			}
+			if (matrix[isl1][isl2] != 0 && head->distTo) { // перезапись дист
+				if (current->distTo + matrix[isl1][isl2] < head->distTo)
+					head->distTo = current->distTo + matrix[isl1][isl2];
 
-			mx_printint(head->next->currentIsl);
-			mx_printchar(' ');
-			mx_printint(head->next->distTo);
-			mx_printchar('\n');
-
+			} else if (matrix[isl1][isl2] != 0 && !head->distTo) // запись еще неизвестной дист
+				head->distTo = current->distTo + matrix[isl1][isl2];
 			head = head->next;
 		}
 		current = current->next;
 	}
 
-	printf("%d\n", dist);
-	// printf("**%s\n", path);
 
-
-
-
-
-
-
-
-
-while (unvisited != NULL)
-{
-	printf("%d  %d\n", unvisited->currentIsl, unvisited->distTo);
-	pop_front_path(&unvisited);
-}
+	while (unvisited != NULL)
+	{
+		printf("%s  %d\n", set[unvisited->currentIsl], unvisited->distTo);
+		// while (unvisited->path != NULL)
+		// 	pop_front_path(&unvisited->path);
+		pop_front_path(&unvisited);
+	}
 }
 
 void mx_algo(int **matrix, char **set) {

@@ -52,16 +52,17 @@ static void mx_set(char ***set, char ***arrarr) {
 			}
 			if (flag == 0) {
 				set1[i] = mx_strdup(*arr);
+				set1[i+1] = NULL;
 				i++;
 			}
 			arr++;
 		}
 	}
-	set1[i] = NULL;
 }
 
 void mx_create_set(char ***set, char ***arrarr, char *nIslands) {
 	int count = mx_count_set(*arrarr, nIslands);
 	*set = (char **)malloc((count + 1) * sizeof(char *));
+	**set = NULL;
 	mx_set(&(*set), &(*arrarr));
 }

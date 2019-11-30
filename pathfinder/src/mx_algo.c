@@ -6,7 +6,7 @@ static t_island *create_path(int isl, int dist) {
 
 	node->currentIsl = isl;
 	node->distTo = dist;
-	node->path = NULL;
+	// node->path = NULL;
 	node->next = NULL;
 	return node;
 }

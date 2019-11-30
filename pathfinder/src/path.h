@@ -93,6 +93,11 @@ void mx_pop_back(t_list **head);
 int mx_list_size(t_list *list);
 t_list *mx_sort_list(t_list *lst, bool (*cmp)(void *, void *));
 
+typedef struct s_path {
+	char *bondIsl;
+	char *bondDist;
+	struct s_path *next;
+}       t_path;
 
 typedef struct s_island {
 	int currentIsl;
@@ -101,12 +106,7 @@ typedef struct s_island {
 	struct s_island *next;
 }		t_island;
 
-typedef struct s_path {
-	char *bondIsl;
-	char *bondDist;
-	struct s_path *next;
-}       t_path;
-
+void mx_check_empty_line(char **lines, char *file);
 void mx_errors(int argc, char *file, char **argv);
 void mx_parse(char *fd, int ***matrix, char ***set);
 void mx_create_arrarr(char **lines, char ***arrarr);
@@ -114,5 +114,6 @@ void mx_create_set(char ***set, char ***arrarr, char *nIslands);
 int **mx_create_matrix(char **set, char ***arrarr);
 void mx_print_mat(int **mat, char **set);
 void mx_algo(int **matrix, char **set);
+
 
 #endif

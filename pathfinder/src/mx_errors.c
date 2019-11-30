@@ -29,8 +29,8 @@ static void mx_checkline(char **lines, int nline) {
 }
 
 static void mx_parserr(char *file) {
-
 	char **lines = mx_strsplit(file, '\n');
+	mx_check_empty_line(lines, file);
 	int nline = 0, at = 0;
 	
 	while (lines[nline]) nline++;

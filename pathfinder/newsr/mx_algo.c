@@ -1,8 +1,8 @@
 #include "path.h"
 
-static t_island *create_path(int isl, int dist) {
+static t_island *create_island(int isl, int dist) {
 
-	t_island *node = (t_island *)malloc(1 * sizeof(t_list));
+	t_island *node = (t_island *)malloc(1 * sizeof(t_island));
 
 	node->currentIsl = isl;
 	node->distTo = dist;
@@ -11,21 +11,21 @@ static t_island *create_path(int isl, int dist) {
 	return node;
 }
 
-static void push_back_path (t_island **island, int isl, int dist) {
-    t_island *new = create_path(isl, dist);
-    t_island *last = *island;
+static void push_back_island(t_island **path, int isl, int dist) {
+	t_island *new = create_island(isl, dist);
+	t_island *last = *path;
 
-    if (*island == NULL) {
-     *island = new;
-        return;
-    }
-    while (last->next != NULL)
-        last = last->next;
-    last->next = new;
-    return;
-} 
+	if (*path == NULL) {
+		*path = new;
+		return;
+	}
+	while (last->next != NULL)
+		last = last->next;
+	last->next = new;
+	return;
+}
 
-static void pop_front_path(t_island **head) {
+static void pop_front_island(t_island **head) {
     if (!head || !(*head)) return;
 
     if ((*head)->next == NULL) {
@@ -40,56 +40,78 @@ static void pop_front_path(t_island **head) {
     }
 }
 
+static void pop_middle_island(t_island **unvisited, int index) {
+	if (!unvisited || !(*unvisited)) return;
+	if (!index) return;
+
+	if ((*unvisited)->next == NULL && (*unvisited)->currentIsl == index) {
+		free(*unvisited);
+		*unvisited = NULL;
+		return;
+	}
+	else {
+		t_island *temp = *unvisited;
+		t_island *leftOne = temp;
+		while (temp->currentIsl != index && temp != NULL)
+			leftOne = temp;
+			temp = temp->next;
+		}
+		
+	return;
+}
 
 
 
 
 static void deixtra(int **matrix, char **set, int root, int size) {
-	t_island *unvisited = NULL; // лист
-	t_island *visited = NULL;
+	t_island *unvisited = NULL; // лист непройденных нод
+	t_island *visited = NULL; // лист пройденных нод
+	t_island *current = NULL;
+	t_island *shortest = NULL;
 
-	for (int i = root; i < size; i++) {
-		push_back_path(&unvisited, i, 0);  // заполнение пустыми нодами
-	}
+	for (int i = 0; i < size; i++)
+		push_back_island(&unvisited, i, 0);  // заполнение пустыми нодами
+	current = unvisited;
+	while(current->currentIsl != root)
+		current = current->next;
+	push_back_island(&visited, current->currentIsl, current->distTo);
+	pop_front_island(&current);
+	mx_printint(unvisited->currentIsl);
+	current = visited;
+	mx_printint(current->currentIsl);
 
-	for (int isl1 = root; isl1 < size; isl1++) {
 
-		t_island *head = unvisited;
-		t_island *current = unvisited;
 
-		while(current->currentIsl != isl1)
-			current = current->next;
-		while(head->currentIsl != isl1+1 && isl1+1 < size)
-			head = head->next; // поиск отправной точки
+	while (unvisited) {
+		t_island *head = unvisited;]
 
-		for (int isl2 = isl1+1; head && isl2 < size; isl2++) {
-
-			if (matrix[isl1][isl2] != 0 && head->distTo) { // перезапись дист
+		while (head != NULL) {
+			int isl1 = current->currentIsl;
+			int isl2 = head->currentIsl;
+			if (matrix[isl1][isl2] != 0 && head->distTo == 0) { // запись еще неизвестной дист 
+				head->distTo = current->distTo + matrix[isl1][isl2];
+			} else if (matrix[isl1][isl2] != 0) // перезапись дист
 				if (current->distTo + matrix[isl1][isl2] < head->distTo)
 					head->distTo = current->distTo + matrix[isl1][isl2];
 
-
-			} 
-			else if (matrix[isl1][isl2] != 0 && !head->distTo) // запись еще неизвестной дист
-				head->distTo = current->distTo + matrix[isl1][isl2];
 			head = head->next;
 		}
+
+		shortest = mx_shortest(&unvisited);
+		push_back_island(&visited, shortest->currentIsl, shortest->distTo);
+		pop_front_island(&shortest);
 		current = current->next;
 	}
 
-	while (unvisited != NULL)
+
+	while (visited != NULL)
 	{
-		printf("%s  %d\n", set[unvisited->currentIsl], unvisited->distTo);
-		// while (unvisited->path != NULL)
-		// 	pop_front_path(&unvisited->path);
-		pop_front_path(&unvisited);
+		printf("%s  %d\n", set[visited->currentIsl], visited->distTo);
+		pop_front_island(&visited);
 	}
 }
 
 void mx_algo(int **matrix, char **set) {
-	// t_path *visited
-	// t_path *unvisited
-	// int root = i
 	int size = 0;
 
 	int i = 0;

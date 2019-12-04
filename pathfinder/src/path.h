@@ -102,7 +102,7 @@ typedef struct s_path {
 typedef struct s_island {
 	int currentIsl;
 	int distTo;
-	struct s_path *path;
+	// struct s_path *path;
 	struct s_island *next;
 }		t_island;
 
@@ -114,6 +114,7 @@ void mx_create_set(char ***set, char ***arrarr, char *nIslands);
 int **mx_create_matrix(char **set, char ***arrarr);
 void mx_print_mat(int **mat, char **set);
 void mx_algo(int **matrix, char **set);
+t_island *mx_shortest(t_island **unvisited);
 
 
 #endif

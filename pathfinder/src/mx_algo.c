@@ -1,6 +1,6 @@
 #include "path.h"
 
-static t_island *create_path(int isl, int dist) {
+static t_island *create_island(int isl, int dist) {
 
 	t_island *node = (t_island *)malloc(1 * sizeof(t_list));
 
@@ -11,8 +11,8 @@ static t_island *create_path(int isl, int dist) {
 	return node;
 }
 
-static void push_back_path(t_island **path, int isl, int dist) {
-	t_island *new = create_path(isl, dist);
+static void push_back_island(t_island **path, int isl, int dist) {
+	t_island *new = create_island(isl, dist);
 	t_island *last = *path;
 
 	if (*path == NULL) {
@@ -25,7 +25,7 @@ static void push_back_path(t_island **path, int isl, int dist) {
 	return;
 }
 
-static void pop_front_path(t_island **head) {
+static void pop_front_island(t_island **head) {
     if (!head || !(*head)) return;
 
     if ((*head)->next == NULL) {
@@ -45,40 +45,57 @@ static void pop_front_path(t_island **head) {
 
 
 static void deixtra(int **matrix, char **set, int root, int size) {
-	t_island *unvisited = NULL; // лист
+	t_island *unvisited = NULL; // лист непройденных нод
+	t_island *visited = NULL; // лист пройденных нод
+	t_island *current = NULL;
+	t_island *shortest = NULL;
 
-	for (int i = root; i < size; i++)
-		push_back_path(&unvisited, i, 0);  // заполнение пустыми нодами
+	for (int i = 0; i < size; i++)
+		push_back_island(&unvisited, i, 0);  // заполнение пустыми нодами
+	current = unvisited;
+	while(current->currentIsl != root)
+		current = current->next;
+	push_back_island(&visited, current->currentIsl, current->distTo);
+	pop_front_island(&current);
+	current = visited;
 
-	for (int isl1 = root; isl1 < size; isl1++) {
+	while (unvisited) {
 		t_island *head = unvisited;
-		t_island *current = unvisited;
 
-		while(current->currentIsl != isl1)
-			current = current->next;
-		while(head->currentIsl != isl1+1 && isl1+1 < size)
-			head = head->next; // поиск отправной точки
+/*
+		1. root to visited;
+		1. Найти кратчайшую
+		2. Выделить из анвизитед 
+		3. Добавить в визитед
+		4. кратчайшая - карент
+*/
 
-		for (int isl2 = isl1+1; head && isl2 < size; isl2++) {
+		while (head != NULL) {
+			int isl1 = current->currentIsl;
+			int isl2 = head->currentIsl;
 
-			if (matrix[isl1][isl2] != 0 && head->distTo) { // перезапись дист
+			if (matrix[isl1][isl2] != 0 && head->distTo != 0) { // запись еще неизвестной дист 
+				head->distTo = current->distTo + matrix[isl1][isl2];
+			} else if (matrix[isl1][isl2] != 0) // перезапись дист
 				if (current->distTo + matrix[isl1][isl2] < head->distTo)
 					head->distTo = current->distTo + matrix[isl1][isl2];
 
-			} else if (matrix[isl1][isl2] != 0 && !head->distTo) // запись еще неизвестной дист
-				head->distTo = current->distTo + matrix[isl1][isl2];
 			head = head->next;
 		}
+
+		shortest = mx_shortest(&unvisited);
+		push_back_island(&visited, shortest->currentIsl, shortest->distTo);
+		pop_front_island(&shortest);
 		current = current->next;
 	}
 
 
-	while (unvisited != NULL)
+	while (visited != NULL)
 	{
-		printf("%s  %d\n", set[unvisited->currentIsl], unvisited->distTo);
+		printf("%s  %d\n", set[visited->currentIsl], visited->distTo);
 		// while (unvisited->path != NULL)
 		// 	pop_front_path(&unvisited->path);
-		pop_front_path(&unvisited);
+		pop_front_island(&visited);
 	}
 }
 

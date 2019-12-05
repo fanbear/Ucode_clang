@@ -1,14 +1,19 @@
 #include "path.h"
 
 t_island *mx_shortest(t_island **unvisited) {
-	t_island *head = *unvisited;
-	t_island *shortest = *unvisited;
+	t_island *head = NULL;
+	t_island *shortest = NULL;
 
-	while(head) {
-		if (shortest->distTo > head->distTo) {
-			shortest = head;
+	if (unvisited || *unvisited) {
+		head = *unvisited;
+		shortest = *unvisited;
+		while(head) {
+			if (head->distTo)
+			if (shortest->distTo > head->distTo) {
+				shortest = head;
+			}
+			head = head->next;
 		}
-		head = head->next;
 	}
 	return shortest;
 }

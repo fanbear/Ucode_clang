@@ -36,28 +36,36 @@ static void pop_front_island(t_island **head) {
     else {
         t_island *p = (*head)->next;
         free(*head);
+        *head = NULL;
         *head = p;
     }
 }
 
 static void pop_middle_island(t_island **unvisited, int index) {
 	if (!unvisited || !(*unvisited)) return;
-	if (!index) return;
-
-	if ((*unvisited)->next == NULL && (*unvisited)->currentIsl == index) {
-		free(*unvisited);
-		*unvisited = NULL;
-		return;
+	if ((*unvisited)->currentIsl == index)
+		pop_front_island(&(*unvisited));
+	else if ((*unvisited)->currentIsl == index) {
+		t_island *temp = *unvisited;
+		*unvisited = (*unvisited)->next;
+		free(temp);
+		temp = NULL;
 	}
 	else {
 		t_island *temp = *unvisited;
 		t_island *leftOne = temp;
-		while (temp->currentIsl != index && temp != NULL)
+		while (temp != NULL && temp->currentIsl != index) {
 			leftOne = temp;
 			temp = temp->next;
 		}
-		
-	return;
+		if (temp && temp->currentIsl == index) {
+			if (temp->next)
+				leftOne->next = temp->next;
+			else leftOne->next = NULL;
+			free(temp);
+			temp = NULL;
+		}
+	}
 }
 
 
@@ -75,15 +83,15 @@ static void deixtra(int **matrix, char **set, int root, int size) {
 	while(current->currentIsl != root)
 		current = current->next;
 	push_back_island(&visited, current->currentIsl, current->distTo);
-	pop_front_island(&current);
-	mx_printint(unvisited->currentIsl);
+	pop_middle_island(&unvisited, root);
+	mx_printint(unvisited->next->next->currentIsl);
 	current = visited;
 	mx_printint(current->currentIsl);
 
 
 
 	while (unvisited) {
-		t_island *head = unvisited;]
+		t_island *head = unvisited;
 
 		while (head != NULL) {
 			int isl1 = current->currentIsl;
@@ -98,9 +106,11 @@ static void deixtra(int **matrix, char **set, int root, int size) {
 		}
 
 		shortest = mx_shortest(&unvisited);
+		// mx_printint(shortest->currentIsl);
 		push_back_island(&visited, shortest->currentIsl, shortest->distTo);
-		pop_front_island(&shortest);
+		pop_middle_island(&unvisited, shortest->currentIsl);
 		current = current->next;
+				mx_printint(current->currentIsl);
 	}
 
 

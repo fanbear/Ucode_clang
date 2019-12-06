@@ -45,12 +45,6 @@ static void pop_middle_island(t_island **unvisited, int index) {
 	if (!unvisited || !(*unvisited)) return;
 	if ((*unvisited)->currentIsl == index)
 		pop_front_island(&(*unvisited));
-	else if ((*unvisited)->currentIsl == index) {
-		t_island *temp = *unvisited;
-		*unvisited = (*unvisited)->next;
-		free(temp);
-		temp = NULL;
-	}
 	else {
 		t_island *temp = *unvisited;
 		t_island *leftOne = temp;
@@ -61,7 +55,9 @@ static void pop_middle_island(t_island **unvisited, int index) {
 		if (temp && temp->currentIsl == index) {
 			if (temp->next)
 				leftOne->next = temp->next;
-			else leftOne->next = NULL;
+			else 
+				leftOne->next = NULL;
+
 			free(temp);
 			temp = NULL;
 		}
@@ -84,7 +80,7 @@ static void deixtra(int **matrix, char **set, int root, int size) {
 		current = current->next;
 	push_back_island(&visited, current->currentIsl, current->distTo);
 	pop_middle_island(&unvisited, root);
-	mx_printint(unvisited->next->next->currentIsl);
+	// mx_printint(unvisited->next->next->currentIsl);
 	current = visited;
 	mx_printint(current->currentIsl);
 
@@ -113,7 +109,7 @@ static void deixtra(int **matrix, char **set, int root, int size) {
 				mx_printint(current->currentIsl);
 	}
 
-
+	mx_printchar('\n');
 	while (visited != NULL)
 	{
 		printf("%s  %d\n", set[visited->currentIsl], visited->distTo);
@@ -127,8 +123,8 @@ void mx_algo(int **matrix, char **set) {
 	int i = 0;
 	while (set[size]) size++;
 
-	// while (set[i]) {
+	 while (set[i]) {
 		deixtra(matrix, set, i, size);
-
-	// }
+		i++;
+	 }
 }

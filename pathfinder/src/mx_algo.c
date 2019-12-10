@@ -123,7 +123,7 @@ void mx_algo(int **matrix, char **set) {
 	int i = 0;
 	while (set[size]) size++;
 
-	 while (set[i]) {
+	 while (i < size - 1) {
 		deixtra(matrix, set, i, size);
 		i++;
 	 }

@@ -43,6 +43,7 @@ static void mx_parserr(char *file) {
 	}
 	at = mx_atoi(lines[0]);
 	mx_checkline(lines, nline-1);
+	mx_check_empty_line(lines, file);
 	mx_del_strarr(&lines);
 }
 

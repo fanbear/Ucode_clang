@@ -6,7 +6,7 @@
 #include <stdlib.h>
 #include <stdbool.h>
 #include <wchar.h>
-#include <malloc.h>
+#include <malloc/malloc.h>
 #include <fcntl.h>
 // #include "libmx.h"
 
@@ -94,9 +94,10 @@ int mx_list_size(t_list *list);
 t_list *mx_sort_list(t_list *lst, bool (*cmp)(void *, void *));
 
 typedef struct s_path {
-	char *bondIsl;
-	char *bondDist;
-	struct s_path *next;
+	int bondIsl;
+	int bondDist;
+	struct s_path *nextBond;
+	struct s_path *nextPath;
 }       t_path;
 
 typedef struct s_island {

@@ -1,12 +1,30 @@
 #include "path.h"
 
-static t_path *create_island(int isl, int dist) {
+// static t_path *create_path(int isl, int dist) {
+// 	t_path *node = (t_path *)malloc(1 * sizeof(t_path));
 
-	t_island *node = (t_island *)malloc(1 * sizeof(t_island));
+// 	node->bondIsl = isl;
+// 	node->bondDist = dist;
+// 	node->nextBond = NULL;
+// 	node->nextPath = NULL;
 
-	node->currentIsl = isl;
-	node->distTo = dist;
-	// node->path = NULL;
-	node->next = NULL;
-	return node;
-}
+// 	return node;
+// }
+
+// static t_path *push_back_path(t_path **path, int isl, int dist) {
+// 	t_path *new = create_path(isl, dist);
+// 	t_path *last = *path;
+
+// 	if (*path == NULL) {
+// 		*path = new;
+// 		return;
+// 	}
+// 	while (last->nextBond != NULL)
+// 		last = last->next;
+// 	last->next = new;
+// 	return;
+// }
+
+// static t_path *copy_path(t_path **path, int isl, int dist) {
+	
+// }

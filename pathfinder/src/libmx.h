@@ -6,7 +6,7 @@
 #include <stdlib.h>
 #include <stdbool.h>
 #include <wchar.h>
-#include <malloc.h>
+#include <malloc/malloc.h>
 #include <fcntl.h>
 
 // Extra libmx.h

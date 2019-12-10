@@ -38,10 +38,9 @@ static int mx_flag(char *arr, char **set1) {
 static void mx_set(char ***set, char ***arrarr) {
 	char **arr = *arrarr;
 	char **set1 = *set;
-	int flag = 0;
 	int i = 0;
 
-	while(*arr) {
+	for (int flag = 0; *arr; flag = 0) {
 		if (mx_isdigit(**arr))
 			arr++;
 		if (*arr) {

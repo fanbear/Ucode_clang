@@ -13,17 +13,18 @@ void mx_check_empty_line(char **lines, char *file) {
 	char *fl = file;
 	char **ln = lines;
 	int i = 0;
+	int len = 0;
+
 	if (*fl == '\n')
 		mx_print_invalid(0);
 	while(*fl) {
-		if (*fl == '\n' && *(fl+1) == '\n') {
+		if (*fl == '\n' && *(fl+1) == '\n')
 			while(ln[i]) {
-				if (mx_strncmp(fl+2, ln[i], mx_strlen(ln[i])) == 0) 
-					mx_print_invalid(i);
+				len = mx_strlen(ln[i]);
+				if (mx_strncmp(fl-len, ln[i], mx_strlen(ln[i])) == 0) 
+					mx_print_invalid(i+1);
 				i++;
 			}
-			mx_print_invalid(i);
-		}
 		fl++;
 	}
 }

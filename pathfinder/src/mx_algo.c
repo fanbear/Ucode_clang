@@ -36,7 +36,6 @@ static void pop_front_island(t_island **head) {
     else {
         t_island *p = (*head)->next;
         free(*head);
-        *head = NULL;
         *head = p;
     }
 }

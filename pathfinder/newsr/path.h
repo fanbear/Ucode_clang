@@ -103,7 +103,7 @@ typedef struct s_path {
 typedef struct s_island {
 	int currentIsl;
 	int distTo;
-	// struct s_path *path;
+	struct s_path *path;
 	struct s_island *next;
 }		t_island;
 

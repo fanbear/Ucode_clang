@@ -1,6 +1,6 @@
 #include "path.h"
 
-static void mx_fill(char **set, char **arrarr, int ***matrix, int i, int j) {
+static void mx_fill(char **set, char **arrarr, int ***matrix, int i, int j) { // number of elements ???
 	int **mat = *matrix;
 	int k = 0;
 

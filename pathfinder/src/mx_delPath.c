@@ -3,18 +3,17 @@
 static void pop_allBond(t_path **head) {
     if (!head || !(*head)) return;
 
+    while ((*head)->nextBond) {
+        t_path *p = (*head)->nextBond;
+        free(*head);
+        *head = p;
+    }
     if (!(*head)->nextBond && !(*head)->nextPath) {
         free(*head);
         *head = NULL;
         return;
     }
-    else {
-    	while ((*head)->nextBond) {
-       		t_path *p = (*head)->nextBond;
-        	free(*head);
-    	    *head = p;
-       	}
-    }
+
 }
 
 static void pop_nextPath(t_path **head) {
@@ -34,12 +33,9 @@ static void pop_nextPath(t_path **head) {
 
 void mx_delPath(t_path **head) {
 	if (!head || !(*head)) return;
-    while((*head)->nextBond || (*head)->nextPath) {
+    while(*head) {
         pop_allBond(&(*head));
-    	if ((*head)->nextBond == NULL && (*head)->nextPath)
-    		pop_nextPath(&(*head));
-        if (!(*head))
-            return;
+    	pop_nextPath(&(*head));
     }
 }
 

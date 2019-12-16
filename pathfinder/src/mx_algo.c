@@ -15,8 +15,7 @@ static void push_back_island(t_island **island, t_path **path, int isl, int dist
 	t_island *new = create_island(isl, dist);
 	t_island *last = *island;
 
-		mx_printint(1);
-	if (path || *path) {
+	if (path) {
 		new->path = mx_copyPath(&(*path));
 	}
 	if (*island == NULL) {
@@ -67,6 +66,23 @@ static void pop_middle_island(t_island **unvisited, int index) {
 	}
 }
 
+static void displayPath(t_path **disp, char **set) {
+	t_path *bond = *disp;
+
+	while(bond) {
+		// mx_printint(9);
+		while(bond->nextBond || bond->nextPath){
+			// mx_printint(8);
+			while(bond->nextBond){
+				// mx_printint(7);
+				printf("%s  %d\n", set[bond->bondIsl], bond->bondDist);
+				bond = bond->nextBond;
+			}
+			printf("%s  %d\n", set[bond->bondIsl], bond->bondDist);
+			bond = bond->nextPath;
+		}
+	}
+}
 
 
 
@@ -99,12 +115,12 @@ static void deixtra(int **matrix, char **set, int root, int size) {
 
 			if (mat != 0 && head->distTo == 0) { // запись еще неизвестной дист 
 				head->distTo = current->distTo + mat;
-				mx_push_backPath(&head->path, &current->path, isl2, mat);
+				head->path = mx_addPath(&current->path, isl2, mat);
 			} else if (mat != 0) {// перезапись дист
 				if (current->distTo + mat < head->distTo) {
 					head->distTo = current->distTo + mat;
 					mx_delPath(&head->path);
-					mx_push_backPath(&head->path, &current->path, isl2, mat);
+					head->path = mx_addPath(&current->path, isl2, mat);
 				}
 				else if (current->distTo + mat == head->distTo)
 					mx_push_backPath(&head->path, &current->path, isl2, mat);
@@ -113,7 +129,7 @@ static void deixtra(int **matrix, char **set, int root, int size) {
 		}
 
 		shortest = mx_shortest(&unvisited);
-		// mx_printint(shortest->currentIsl);
+		displayPath(&shortest->path, set);
 		push_back_island(&visited, &shortest->path, shortest->currentIsl, shortest->distTo);
 		pop_middle_island(&unvisited, shortest->currentIsl);
 		current = current->next;
@@ -122,19 +138,6 @@ static void deixtra(int **matrix, char **set, int root, int size) {
 
 	mx_printchar('\n');
 
-
-	t_path *bond = current->path;
-
-	while(bond->nextBond || bond->nextPath) {
-		while(bond){
-			while(bond->nextBond){
-				printf("%s  %d\n", set[bond->bondIsl], bond->bondDist);
-				bond = bond->nextBond;
-			}
-			printf("%s  %d\n", set[bond->bondIsl], bond->bondDist);
-			bond = bond->nextPath;
-		}
-	}
 	while (visited != NULL)
 	{
 		// printf("%s  %d\n", set[visited->currentIsl], visited->distTo);

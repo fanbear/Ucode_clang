@@ -16,6 +16,7 @@ static t_path *addOnePath(t_path **previous, int isl, int dist) {
 
 	if (!last)
 		return res = mx_create_path(isl, dist);
+			mx_printint(last->bondIsl);
 	res = mx_create_path(last->bondIsl, last->bondDist);
 	new = res;
 	last = last->nextBond;
@@ -29,11 +30,17 @@ static t_path *addOnePath(t_path **previous, int isl, int dist) {
 }
 
 t_path *mx_addPath(t_path **previous, int isl, int dist) {
-	t_path *cur = (*previous)->nextPath;
-	t_path *res = addOnePath(&cur, isl, dist);
+	t_path *cur = NULL;
+	t_path *res = NULL;
 	t_path *new = NULL;
-	t_path *fast = res;
+	t_path *fast = NULL;
 
+	if (*previous) {
+		cur = *previous;
+	}
+	res = addOnePath(&cur, isl, dist);
+	fast = res;
+		// cur = cur->nextPath;
 	while (cur) {
 		new = addOnePath(&cur, isl, dist);
 		addLink(&fast, &new);

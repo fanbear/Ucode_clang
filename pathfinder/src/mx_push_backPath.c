@@ -34,6 +34,7 @@ void mx_push_backPath(t_path **path, t_path **previous, int isl, int dist) {
 	t_path *cur = *previous;
 	t_path *new = NULL;
 
+	if (last)
 	while (last->nextPath != NULL)
 		last = last->nextPath;
 	while (cur) {

@@ -70,19 +70,15 @@ static void displayPath(t_path **disp, char **set) {
 	t_path *bond = *disp;
 
 	while(bond) {
-		// mx_printint(9);
-		while(bond->nextBond || bond->nextPath){
-			// mx_printint(8);
-			while(bond->nextBond){
-				// mx_printint(7);
-				printf("%s  %d\n", set[bond->bondIsl], bond->bondDist);
-				bond = bond->nextBond;
-			}
+		while(bond->nextBond){
 			printf("%s  %d\n", set[bond->bondIsl], bond->bondDist);
-			bond = bond->nextPath;
+			bond = bond->nextBond;
 		}
+		printf("%s  %d\n", set[bond->bondIsl], bond->bondDist);
+		bond = bond->nextPath;
 	}
 }
+
 
 
 
@@ -101,7 +97,7 @@ static void deixtra(int **matrix, char **set, int root, int size) {
 	pop_middle_island(&unvisited, root);
 	// mx_printint(unvisited->next->next->currentIsl);
 	current = visited;
-	mx_printint(current->currentIsl);
+	// mx_printint(current->currentIsl);
 
 
 
@@ -116,14 +112,15 @@ static void deixtra(int **matrix, char **set, int root, int size) {
 			if (mat != 0 && head->distTo == 0) { // запись еще неизвестной дист 
 				head->distTo = current->distTo + mat;
 				head->path = mx_addPath(&current->path, isl2, mat);
+				mx_printint(head->path->bondIsl);
 			} else if (mat != 0) {// перезапись дист
+				if (current->distTo + mat == head->distTo)
+					mx_push_backPath(&head->path, &current->path, isl2, mat);
 				if (current->distTo + mat < head->distTo) {
 					head->distTo = current->distTo + mat;
 					mx_delPath(&head->path);
 					head->path = mx_addPath(&current->path, isl2, mat);
 				}
-				else if (current->distTo + mat == head->distTo)
-					mx_push_backPath(&head->path, &current->path, isl2, mat);
 			}
 			head = head->next;
 		}
@@ -133,7 +130,7 @@ static void deixtra(int **matrix, char **set, int root, int size) {
 		push_back_island(&visited, &shortest->path, shortest->currentIsl, shortest->distTo);
 		pop_middle_island(&unvisited, shortest->currentIsl);
 		current = current->next;
-				mx_printint(current->currentIsl);
+				// mx_printint(current->currentIsl);
 	}
 
 	mx_printchar('\n');

@@ -74,9 +74,10 @@ static void displayPath(t_path **disp, char **set) {
 			printf("%s  %d\n", set[bond->bondIsl], bond->bondDist);
 			bond = bond->nextBond;
 		}
-		printf("%s  %d\n", set[bond->bondIsl], bond->bondDist);
+		printf("%s  %d\n\n", set[bond->bondIsl], bond->bondDist);
 		bond = bond->nextPath;
 	}
+	printf("%s\n", "next");
 }
 
 
@@ -108,14 +109,16 @@ static void deixtra(int **matrix, char **set, int root, int size) {
 			int isl1 = current->currentIsl;
 			int isl2 = head->currentIsl;
 			int mat = matrix[isl1][isl2];
+				// mx_printint(current->currentIsl);
 
 			if (mat != 0 && head->distTo == 0) { // запись еще неизвестной дист 
 				head->distTo = current->distTo + mat;
 				head->path = mx_addPath(&current->path, isl2, mat);
-				mx_printint(head->path->bondIsl);
+				// mx_printint(head->path->bondIsl);
 			} else if (mat != 0) {// перезапись дист
-				if (current->distTo + mat == head->distTo)
+				if (current->distTo + mat == head->distTo){
 					mx_push_backPath(&head->path, &current->path, isl2, mat);
+				}
 				if (current->distTo + mat < head->distTo) {
 					head->distTo = current->distTo + mat;
 					mx_delPath(&head->path);
@@ -127,12 +130,14 @@ static void deixtra(int **matrix, char **set, int root, int size) {
 
 		shortest = mx_shortest(&unvisited);
 		displayPath(&shortest->path, set);
+
+		// mx_printint(shortest->currentIsl);
+		// mx_print_strarr(set, " ");
 		push_back_island(&visited, &shortest->path, shortest->currentIsl, shortest->distTo);
 		pop_middle_island(&unvisited, shortest->currentIsl);
 		current = current->next;
-				// mx_printint(current->currentIsl);
-	}
 
+	}
 	mx_printchar('\n');
 
 	while (visited != NULL)

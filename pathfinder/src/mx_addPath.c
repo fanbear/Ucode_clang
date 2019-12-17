@@ -7,6 +7,7 @@ static void addLink(t_path **cur, t_path **new) {
 		current->nextPath = *new;
 		current = current->nextBond;
 	}
+	current->nextPath = *new;
 }
 
 static t_path *addOnePath(t_path **previous, int isl, int dist) {
@@ -16,7 +17,7 @@ static t_path *addOnePath(t_path **previous, int isl, int dist) {
 
 	if (!last)
 		return res = mx_create_path(isl, dist);
-			mx_printint(last->bondIsl);
+			// mx_printint(last->bondIsl);
 	res = mx_create_path(last->bondIsl, last->bondDist);
 	new = res;
 	last = last->nextBond;

@@ -39,8 +39,10 @@ void mx_push_backPath(t_path **path, t_path **previous, int isl, int dist) {
 		last = last->nextPath;
 	while (cur) {
 		new = addOnePath(&cur, isl, dist);
-		addLink(&last, &new);
-		last = last->nextPath;
+		if (mx_uniquePath(&new, &(*path)) == 1) {
+			addLink(&last, &new);
+			last = last->nextPath;
+		}
 		cur = cur->nextPath;
 	}
 }

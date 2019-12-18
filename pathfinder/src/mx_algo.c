@@ -88,37 +88,29 @@ static void deixtra(int **matrix, char **set, int root, int size) {
 	t_island *visited = NULL; // лист пройденных нод
 	t_island *current = NULL;
 	t_island *shortest = NULL;
-
+	t_path *first = mx_create_path(root, 0);
 	for (int i = 0; i < size; i++)
 		push_back_island(&unvisited, NULL, i, 0);  // заполнение пустыми нодами
 	current = unvisited;
 	while(current->currentIsl != root)
 		current = current->next;
-	push_back_island(&visited, NULL, current->currentIsl, current->distTo);
+	push_back_island(&visited, &first, current->currentIsl, current->distTo);
 	pop_middle_island(&unvisited, root);
-	// mx_printint(unvisited->next->next->currentIsl);
 	current = visited;
-	// mx_printint(current->currentIsl);
-
-
 
 	while (unvisited) {
 		t_island *head = unvisited;
-
 		while (head != NULL) {
 			int isl1 = current->currentIsl;
 			int isl2 = head->currentIsl;
 			int mat = matrix[isl1][isl2];
-				// mx_printint(current->currentIsl);
 
 			if (mat != 0 && head->distTo == 0) { // запись еще неизвестной дист 
 				head->distTo = current->distTo + mat;
 				head->path = mx_addPath(&current->path, isl2, mat);
-				// mx_printint(head->path->bondIsl);
 			} else if (mat != 0) {// перезапись дист
-				if (current->distTo + mat == head->distTo){
+				if (current->distTo + mat == head->distTo)
 					mx_push_backPath(&head->path, &current->path, isl2, mat);
-				}
 				if (current->distTo + mat < head->distTo) {
 					head->distTo = current->distTo + mat;
 					mx_delPath(&head->path);
@@ -129,16 +121,20 @@ static void deixtra(int **matrix, char **set, int root, int size) {
 		}
 
 		shortest = mx_shortest(&unvisited);
-		displayPath(&shortest->path, set);
-
-		// mx_printint(shortest->currentIsl);
-		// mx_print_strarr(set, " ");
 		push_back_island(&visited, &shortest->path, shortest->currentIsl, shortest->distTo);
 		pop_middle_island(&unvisited, shortest->currentIsl);
 		current = current->next;
 
 	}
 	mx_printchar('\n');
+
+	for(int j = 0; j < size; j++) {
+		current = visited;
+		while (current->currentIsl != j)
+			current = current->next;
+		displayPath(&current->path, set);
+	}
+
 
 	while (visited != NULL)
 	{

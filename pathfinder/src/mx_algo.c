@@ -121,6 +121,7 @@ static void deixtra(int **matrix, char **set, int root, int size) {
 		}
 
 		shortest = mx_shortest(&unvisited);
+		mx_printint(shortest->currentIsl);
 		push_back_island(&visited, &shortest->path, shortest->currentIsl, shortest->distTo);
 		pop_middle_island(&unvisited, shortest->currentIsl);
 		current = current->next;

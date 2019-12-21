@@ -130,7 +130,7 @@ static void deixtra(int **matrix, char **set, int root, int size) {
 	}
 	mx_printchar('\n');
 
-	for(int j = 0; j < size; j++) {
+	for(int j = root+1; j < size; j++) {
 		current = visited;
 		while (current->currentIsl != j)
 			current = current->next;
@@ -153,8 +153,8 @@ void mx_algo(int **matrix, char **set) {
 	int i = 0;
 	while (set[size]) size++;
 
-	 // while (i < size - 1) {
+	 while (i < size - 1) {
 		deixtra(matrix, set, i, size);
-		// i++;
-	 // }
+		i++;
+	 }
 }

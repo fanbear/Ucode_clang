@@ -10,21 +10,23 @@ static void mx_print_invalid(int nline) {
 }
 
 static void mx_checkline(char **lines, int nline) {
+	int i = 0;
+	int copy_i = 0;
 
-	while(nline > 0) {
-		int i = 0, copy_i = 0;
-		while(mx_isalpha(lines[nline][i])) i++;
-		if (i == 0 || lines[nline][i] != '-')
-			mx_print_invalid(nline);
+	for (int n = 1; n <= nline; n++) {
+		i = 0, copy_i = 0;
+		while(mx_isalpha(lines[n][i])) i++;
+		if (i == 0 || lines[n][i] != '-')
+			mx_print_invalid(n);
 		i++, copy_i = i;
-		while(mx_isalpha(lines[nline][copy_i])) copy_i++;
-		if (copy_i - i == 0 || lines[nline][copy_i] != ',')
-			mx_print_invalid(nline);
+		while(mx_isalpha(lines[n][copy_i])) copy_i++;
+		if (copy_i - i == 0 || lines[n][copy_i] != ',')
+			mx_print_invalid(n);
 		copy_i++, i = copy_i;
-		while(mx_isdigit(lines[nline][copy_i])) copy_i++;
-		if (copy_i - i == 0 || lines[nline][copy_i] != '\0') 
-			mx_print_invalid(nline);
-		nline--;
+		while(mx_isdigit(lines[n][copy_i])) copy_i++;
+		if (copy_i - i == 0 || lines[n][copy_i] != '\0') 
+			mx_print_invalid(n);
+		// nline--;
 	}
 }
 

@@ -33,9 +33,10 @@ t_path *mx_copyPath(t_path **data) {
 	t_path *new = NULL;
 	t_path *fast = NULL;
 
-	if (*data) {
+	if (*data)
 		cur = *data;
-	}
+	// else
+		// return NULL;
 	res = addOne(&cur);
 	fast = res;
 	cur = cur->nextPath;

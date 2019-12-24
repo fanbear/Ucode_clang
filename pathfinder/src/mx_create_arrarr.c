@@ -27,12 +27,12 @@ static void mx_fill_islands(char ***arrarr, char **lines) {
 		mx_linearr(lines[line], &island1, &island2, &dist);
 		*arr = mx_strdup(island1);
 		arr++;
+		mx_strdel(&island1);
 		*arr = mx_strdup(island2);
 		arr++;
+		mx_strdel(&island2);
 		*arr = mx_strdup(dist);
 		line++, arr++;
-		mx_strdel(&island1);
-		mx_strdel(&island2);
 		mx_strdel(&dist);
 	}
 	*arr = NULL;

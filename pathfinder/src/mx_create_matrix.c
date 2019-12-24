@@ -3,10 +3,14 @@
 static void mx_fill(char **set, char **arrarr, int ***matrix, int i, int j) { // number of elements ???
 	int **mat = *matrix;
 	int k = 0;
-
-	// mx_print_strarr(set, "\n");
+	// mx_printint(i);
+	// mx_print_strarr(arrarr, "\n");
+	// mx_printstr(*arrarr);
 	if(mx_isdigit(arrarr[j + 1][0])) {
-		while(mx_strcmp(set[k], arrarr[j-1]) != 0) k++;
+		while(mx_strcmp(set[k], arrarr[j-1]) != 0) {
+		k++;
+		// mx_printint(k);
+		}
 		mat[i][k] = mx_atoi(arrarr[j+1]);
 		// mx_printint(mat[i][k]);
 		// mx_printchar('\n');

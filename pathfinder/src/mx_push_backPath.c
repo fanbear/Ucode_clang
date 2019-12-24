@@ -7,6 +7,7 @@ static void addLink(t_path **cur, t_path **new) {
 		current->nextPath = *new;
 		current = current->nextBond;
 	}
+	current->nextPath = *new;
 }
 
 static t_path *addOnePath(t_path **previous, int isl, int dist) {
@@ -33,14 +34,15 @@ void mx_push_backPath(t_path **path, t_path **previous, int isl, int dist) {
 	t_path *last = *path;
 	t_path *cur = *previous;
 	t_path *new = NULL;
-
-	if (last)
+	
 	while (last->nextPath != NULL)
 		last = last->nextPath;
 	while (cur) {
 		new = addOnePath(&cur, isl, dist);
-		addLink(&last, &new);
-		last = last->nextPath;
+		if (mx_uniquePath(&new, &(*path)) == 1) {
+			addLink(&last, &new);
+			last = last->nextPath;
+		}
 		cur = cur->nextPath;
 	}
 }

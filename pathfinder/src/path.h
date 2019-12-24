@@ -109,10 +109,10 @@ typedef struct s_island {
 
 t_path *mx_create_path(int isl, int dist);
 void mx_delPath(t_path **head);
-void mx_push_backBond(t_path **path, int isl, int dist);
 t_path *mx_addPath(t_path **previous, int isl, int dist);
 void mx_push_backPath(t_path **path, t_path **previous, int isl, int dist);
 t_path *mx_copyPath(t_path **data);
+int mx_uniquePath(t_path **new, t_path **current);
 void mx_check_empty_line(char **lines, char *file);
 void mx_errors(int argc, char *file, char **argv);
 void mx_parse(char *fd, int ***matrix, char ***set);

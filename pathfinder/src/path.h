@@ -107,6 +107,7 @@ typedef struct s_island {
 	struct s_island *next;
 }		t_island;
 
+void mx_delMat(int ***matrix, char **set);
 t_path *mx_create_path(int isl, int dist);
 void mx_delPath(t_path **head);
 t_path *mx_addPath(t_path **previous, int isl, int dist);

@@ -48,8 +48,10 @@ static void pop_front_island(t_island **head) {
 
 static void pop_middle_island(t_island **unvisited, int index) {
 	if (!unvisited || !(*unvisited)) return;
-	if ((*unvisited)->currentIsl == index)
+	if ((*unvisited)->currentIsl == index) {
+		mx_delPath(&((*unvisited)->path));
 		pop_front_island(&(*unvisited));
+	}
 	else {
 		t_island *temp = *unvisited;
 		t_island *leftOne = temp;
@@ -62,7 +64,7 @@ static void pop_middle_island(t_island **unvisited, int index) {
 				leftOne->next = temp->next;
 			else 
 				leftOne->next = NULL;
-
+			mx_delPath(&temp->path);
 			free(temp);
 			temp = NULL;
 		}
@@ -91,13 +93,14 @@ static void deixtra(int **matrix, char **set, int root, int size) {
 	t_island *visited = NULL; // лист пройденных нод
 	t_island *current = NULL;
 	t_island *shortest = NULL;
-	t_path *first = mx_create_path(root, 0);
+
 	for (int i = 0; i < size; i++)
 		push_back_island(&unvisited, NULL, i, 0);  // заполнение пустыми нодами
 	current = unvisited;
 	while(current->currentIsl != root)
 		current = current->next;
-	push_back_island(&visited, &first, current->currentIsl, current->distTo);
+	current->path = mx_create_path(root, 0);
+	push_back_island(&visited, &current->path, current->currentIsl, current->distTo);
 	pop_middle_island(&unvisited, root);
 	current = visited;
 
@@ -140,11 +143,9 @@ static void deixtra(int **matrix, char **set, int root, int size) {
 
 	while (visited != NULL)
 	{
-		// printf("%s  %d\n", set[visited->currentIsl], visited->distTo);
 		mx_delPath(&visited->path);
 		pop_front_island(&visited);
 	}
-	// mx_print_strarr(set, " ");
 }
 
 void mx_algo(int **matrix, char **set) {

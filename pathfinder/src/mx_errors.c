@@ -26,16 +26,18 @@ static void mx_checkline(char **lines, int nline) {
 		while(mx_isdigit(lines[n][copy_i])) copy_i++;
 		if (copy_i - i == 0 || lines[n][copy_i] != '\0') 
 			mx_print_invalid(n);
-		// nline--;
 	}
 }
 
 static void mx_parserr(char *file) {
-
 	char **lines = mx_strsplit(file, '\n');
 	int nline = 0, at = 0;
 	
 	while (lines[nline]) nline++;
+	if (lines[0][0] == '0') {
+		mx_printerr("error: invalid number of islands\n");
+		exit(EXIT_FAILURE);
+	}
 	while (lines[0][at]) {
 		if (!mx_isdigit(lines[0][at])) {
 			mx_printerr("error: line 1 isn't valid\n");
@@ -43,7 +45,6 @@ static void mx_parserr(char *file) {
 		}
 		at++;
 	}
-	at = mx_atoi(lines[0]);
 	mx_checkline(lines, nline-1);
 	mx_check_empty_line(lines, file);
 	mx_del_strarr(&lines);

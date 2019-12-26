@@ -1,6 +1,19 @@
 #include "path.h"
 
- static void mx_linearr(char *line, char **island1, char **island2, char **dist) {
+static void check_island12(char *island1, char *island2, char *dist, int nline) {
+	char *index = NULL;
+
+	if (mx_strcmp(island1,island2) == 0 && mx_atoi(dist) != 0) {
+		nline++;
+		index = mx_itoa(nline);
+		mx_printerr("error: line ");
+		mx_printerr(index);
+		mx_printerr(" isn't valid\n");
+		exit(EXIT_FAILURE);
+	}
+}
+
+static void mx_linearr(char *line, char **island1, char **island2, char **dist) {
  
 	int i = 0;
 	char *str = line;
@@ -25,6 +38,7 @@ static void mx_fill_islands(char ***arrarr, char **lines) {
 
 	while(lines[line]) {
 		mx_linearr(lines[line], &island1, &island2, &dist);
+		check_island12(island1, island2, dist, line);
 		*arr = mx_strdup(island1);
 		arr++;
 		mx_strdel(&island1);

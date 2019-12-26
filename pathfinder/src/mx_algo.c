@@ -17,9 +17,6 @@ static void push_back_island(t_island **island, t_path **path, int isl, int dist
 
 	if (path && *path) {  // if only *path -> seagfault and if only path -> seagfault with separated;
 		new->path = mx_copyPath(&(*path));
-	} else  if (path && *path == NULL) { // "if" obyazatelno
-		mx_printerr("error: combination of two islands has not a path between them\n"); //88 columns
-		exit(EXIT_FAILURE);
 	}
 	if (*island == NULL) {
 		*island = new;
@@ -62,7 +59,7 @@ static void pop_middle_island(t_island **unvisited, int index) {
 		if (temp && temp->currentIsl == index) {
 			if (temp->next)
 				leftOne->next = temp->next;
-			else 
+			else
 				leftOne->next = NULL;
 			mx_delPath(&temp->path);
 			free(temp);
@@ -129,7 +126,11 @@ static void deixtra(int **matrix, char **set, int root, int size) {
 		push_back_island(&visited, &shortest->path, shortest->currentIsl, shortest->distTo);
 		pop_middle_island(&unvisited, shortest->currentIsl);
 		current = current->next;
-		
+		if (current->path == NULL) {
+			mx_delMat(&matrix, set);
+			mx_printerr("error: combination of two islands has not a path between them\n"); //88 columns
+			exit(EXIT_FAILURE);
+		}
 	}
 	mx_printchar('\n');
 

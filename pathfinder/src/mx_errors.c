@@ -35,7 +35,7 @@ static void mx_parserr(char *file) {
 	
 	while (lines[nline]) nline++;
 	if (lines[0][0] == '0') {
-		mx_printerr("error: invalid number of islands\n");
+		mx_printerr("error: zero isn't allowed\n");
 		exit(EXIT_FAILURE);
 	}
 	while (lines[0][at]) {

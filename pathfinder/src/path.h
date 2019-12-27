@@ -6,7 +6,7 @@
 #include <stdlib.h>
 #include <stdbool.h>
 #include <wchar.h>
-#include <malloc/malloc.h>
+#include <malloc.h>
 #include <fcntl.h>
 // #include "libmx.h"
 
@@ -107,6 +107,15 @@ typedef struct s_island {
 	struct s_island *next;
 }		t_island;
 
+typedef struct s_char {
+	char *p;
+	char *r;
+	char *d;
+	int s;
+}		t_char;
+
+void mx_join(char **res, char *s2);
+void mx_printOutput(t_island **visited, int root, int size, char **set);
 void mx_delMat(int ***matrix, char **set);
 t_path *mx_create_path(int isl, int dist);
 void mx_delPath(t_path **head);

@@ -68,20 +68,6 @@ static void pop_middle_island(t_island **unvisited, int index) {
 	}
 }
 
-static void displayPath(t_path **disp, char **set) {
-	t_path *bond = *disp;
-
-	while(bond) {
-		while(bond->nextBond){
-			printf("%s  %d\n", set[bond->bondIsl], bond->bondDist);
-			bond = bond->nextBond;
-		}
-		printf("%s  %d\n\n", set[bond->bondIsl], bond->bondDist);
-		bond = bond->nextPath;
-	}
-	printf("%s\n", "next");
-}
-
 
 
 
@@ -127,20 +113,12 @@ static void deixtra(int **matrix, char **set, int root, int size) {
 		pop_middle_island(&unvisited, shortest->currentIsl);
 		current = current->next;
 		if (current->path == NULL) {
-			mx_delMat(&matrix, set);
+			// mx_delMat(&matrix, set);
 			mx_printerr("error: combination of two islands has not a path between them\n"); //88 columns
 			exit(EXIT_FAILURE);
 		}
 	}
-	mx_printchar('\n');
-
-	for(int j = root+1; j < size; j++) {
-		current = visited;
-		while (current->currentIsl != j)
-			current = current->next;
-		displayPath(&current->path, set);
-	}
-
+	mx_printOutput(&visited, root+1, size, set);
 
 	while (visited != NULL)
 	{

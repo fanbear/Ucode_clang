@@ -77,6 +77,13 @@ static void deixtra(int **matrix, char **set, int root, int size) {
 	t_island *current = NULL;
 	t_island *shortest = NULL;
 
+	for(int i = 0; i < size; i++) {
+		mx_printstr(set[i]);
+		mx_printstr(" -- ");
+		mx_printint(i);
+		mx_printchar('\n');
+	}
+
 	for (int i = 0; i < size; i++)
 		push_back_island(&unvisited, NULL, i, 0);  // заполнение пустыми нодами
 	current = unvisited;
@@ -119,7 +126,6 @@ static void deixtra(int **matrix, char **set, int root, int size) {
 		}
 	}
 	mx_printOutput(&visited, root+1, size, set);
-
 	while (visited != NULL)
 	{
 		mx_delPath(&visited->path);

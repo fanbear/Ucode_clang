@@ -114,6 +114,7 @@ typedef struct s_char {
 	int s;
 }		t_char;
 
+void mx_sortPath(t_path **disp);
 void mx_join(char **res, char *s2);
 void mx_printOutput(t_island **visited, int root, int size, char **set);
 void mx_delMat(int ***matrix, char **set);

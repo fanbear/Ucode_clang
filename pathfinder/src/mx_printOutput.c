@@ -79,6 +79,8 @@ void mx_printOutput(t_island **visited, int root, int size, char **set) {
 		current = *visited;
 		while (current->currentIsl != root)
 			current = current->next;
+		mx_sortPath(&current->path);
 		displayPath(&current->path, current->distTo, set);
+		exit(1);
 	}
 }

@@ -74,13 +74,16 @@ static void displayPath(t_path **disp, int distTo, char **set) {
 
 void mx_printOutput(t_island **visited, int root, int size, char **set) {
 	t_island *current = NULL;
+	int sizeP;
 
 	for(; root < size; root++) {
 		current = *visited;
 		while (current->currentIsl != root)
 			current = current->next;
-		mx_sortPath(&current->path);
+		sizeP = mx_addIndexPathes(&current->path);
+		// mx_printstr("FFF");
+		mx_sortPath(&current->path, sizeP);
+		// mx_printstr("SDA");
 		displayPath(&current->path, current->distTo, set);
-		exit(1);
 	}
 }

@@ -96,6 +96,7 @@ t_list *mx_sort_list(t_list *lst, bool (*cmp)(void *, void *));
 typedef struct s_path {
 	int bondIsl;
 	int bondDist;
+	int index;
 	struct s_path *nextBond;
 	struct s_path *nextPath;
 }       t_path;
@@ -114,7 +115,8 @@ typedef struct s_char {
 	int s;
 }		t_char;
 
-void mx_sortPath(t_path **disp);
+int mx_addIndexPathes(t_path **path);
+void mx_sortPath(t_path **disp, int sizeP);
 void mx_join(char **res, char *s2);
 void mx_printOutput(t_island **visited, int root, int size, char **set);
 void mx_delMat(int ***matrix, char **set);

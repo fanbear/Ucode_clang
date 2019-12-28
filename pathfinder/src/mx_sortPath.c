@@ -32,15 +32,15 @@ static void swpD(t_path **disp, t_path **bond, t_path **fast) {
 		cur = cur->nextPath;
 	addLink(&cur, &(*bond));
 	cur = *disp;
-	while(cur && cur->nextPath != *bond)
-		cur = cur->nextPath;
 	if (*disp == *bond)
 		*disp = *fast;
-	else
+	else {
+		while(cur && cur->nextPath != *bond)
+			cur = cur->nextPath;
 		addLink(&cur, &(*fast));
+	}
 	addLink(&(*fast), &(*bond)->nextPath);
 	addLink(&(*bond), &temp);
-
 }
 
 static void swp(t_path **disp, t_path **bond, t_path **fast) {

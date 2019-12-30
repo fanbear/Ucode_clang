@@ -115,6 +115,28 @@ typedef struct s_char {
 	int s;
 }		t_char;
 
+typedef struct s_int {
+	int size;
+	int root;
+}		t_int;
+
+typedef struct s_md {
+	int isl1;
+	int isl2;
+	int mat;
+}		t_md;
+
+typedef struct s_li{
+	t_island *un;
+	t_island *v;
+	t_island *cur;
+	t_island *sh;
+}		t_li;
+
+t_island *mx_create_island(int isl, int dist);
+void mx_pI(t_island **island, t_path **path, int isl, int dist);
+void mx_pop_front_island(t_island **head);
+void mx_pop_middle_island(t_island **unvisited, int index);
 int mx_addIndexPathes(t_path **path);
 void mx_sortPath(t_path **disp, int sizeP);
 void mx_join(char **res, char *s2);
@@ -123,7 +145,7 @@ void mx_delMat(int ***matrix, char **set);
 t_path *mx_create_path(int isl, int dist);
 void mx_delPath(t_path **head);
 t_path *mx_addPath(t_path **previous, int isl, int dist);
-void mx_push_backPath(t_path **path, t_path **previous, int isl, int dist);
+void mx_pushPath(t_path **path, t_path **previous, int isl, int dist);
 t_path *mx_copyPath(t_path **data);
 int mx_uniquePath(t_path **new, t_path **current);
 void mx_check_empty_line(char **lines, char *file);

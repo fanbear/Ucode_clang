@@ -33,19 +33,21 @@ static t_char *createprd(t_path *bond, char **set) {
 
 	return prd;
 }
-static void addNextBond(t_char **prd, t_path *bond, int distTo, char **set) {
+static void addNextBond(t_char **prd, t_path *bond, char *distTo, char **set) {
+	char *dist = mx_itoa(bond->bondDist);
+
 	mx_join(&(*prd)->r, " -> ");
 	mx_join(&(*prd)->r, set[bond->bondIsl]);
 	if (mx_strlen((*prd)->d) != 10)
 		mx_join(&(*prd)->d, " + ");
-	mx_join(&(*prd)->d, mx_itoa(bond->bondDist));
-
+	mx_join(&(*prd)->d, dist);
+	mx_strdel(&dist);
 	if (bond->nextBond == NULL) {
 		mx_join(&(*prd)->p, " -> ");
 		mx_join(&(*prd)->p, set[bond->bondIsl]);
 		if ((*prd)->s != 2) {
 			mx_join(&(*prd)->d, " = ");
-			mx_join(&(*prd)->d, mx_itoa(distTo));
+			mx_join(&(*prd)->d, distTo);
 		}
 		mx_join(&(*prd)->r, "\n");
 		mx_join(&(*prd)->p, "\n");
@@ -56,18 +58,20 @@ static void addNextBond(t_char **prd, t_path *bond, int distTo, char **set) {
 static void displayPath(t_path **disp, int distTo, char **set) {
 	t_path *bond = *disp;
 	t_char *prd = NULL;
+	char *dist = mx_itoa(distTo);
 
 	while(bond) {
 		prd = createprd(bond, set);
 		bond = bond->nextBond;
 		while(bond->nextBond) {
-			addNextBond(&prd, bond, distTo, set);
+			addNextBond(&prd, bond, dist, set);
 			bond = bond->nextBond;
 		}
-		addNextBond(&prd, bond, distTo, set);
+		addNextBond(&prd, bond, dist, set);
 		printLine(&prd);
 		bond = bond->nextPath;
 	}
+	mx_strdel(&dist);
 }
 
 
@@ -81,9 +85,7 @@ void mx_printOutput(t_island **visited, int root, int size, char **set) {
 		while (current->currentIsl != root)
 			current = current->next;
 		sizeP = mx_addIndexPathes(&current->path);
-		// mx_printstr("FFF");
 		mx_sortPath(&current->path, sizeP);
-		// mx_printstr("SDA");
 		displayPath(&current->path, current->distTo, set);
 	}
 }

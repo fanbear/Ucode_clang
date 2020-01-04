@@ -133,6 +133,7 @@ typedef struct s_li{
 	t_island *sh;
 }		t_li;
 
+t_li *mx_create_l();
 t_island *mx_create_island(int isl, int dist);
 void mx_pI(t_island **island, t_path **path, int isl, int dist);
 void mx_pop_front_island(t_island **head);

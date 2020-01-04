@@ -7,6 +7,5 @@ t_path *mx_create_path(int isl, int dist) {
 	node->bondDist = dist;
 	node->nextBond = NULL;
 	node->nextPath = NULL;
-
 	return node;
 }

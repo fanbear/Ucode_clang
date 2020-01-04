@@ -1,7 +1,8 @@
 #include "path.h"
 
 static void st(t_island **un, t_island **cur, t_island **v, t_int *in) {
-	if (*un == NULL) mx_printint(12);
+	*un = NULL;
+	*v = NULL;
 	for (int i = 0; i < in->size; i++)
 		mx_pI(&(*un), NULL, i, 0);  // заполнение пустыми нодами
 	*cur = *un;
@@ -20,10 +21,10 @@ static void md(t_island **un, t_island **cur, int **mat, t_md **m) {
 		(*m)->isl1 = (*cur)->currentIsl;
 		(*m)->isl2 = h->currentIsl;
 		(*m)->mat = mat[(*m)->isl1][(*m)->isl2];
-		if ((*m)->mat != 0 && h->distTo == 0) { // запись еще неизвестной дист 
+		if ((*m)->mat != 0 && h->distTo == 0) {
 			h->distTo = (*cur)->distTo + (*m)->mat;
 			h->path = mx_addPath(&(*cur)->path, (*m)->isl2, (*m)->mat);
-		} else if ((*m)->mat != 0) {// перезапись дист
+		} else if ((*m)->mat != 0) {
 			if ((*cur)->distTo + (*m)->mat == h->distTo)
 				mx_pushPath(&h->path, &(*cur)->path, (*m)->isl2, (*m)->mat);
 			if ((*cur)->distTo + (*m)->mat < h->distTo) {
@@ -48,15 +49,14 @@ static void lt(t_li **l, int **matrix, char **set) {
 		mx_printerr("error: two islands has not a path between them\n");
 		exit(EXIT_FAILURE);
 	}
-	if ((*l)->un == NULL) mx_printint(123);
 }
 
 
 static void deixtra(int **matrix, char **set, t_int *in) {
-	t_li *l = malloc(sizeof(t_li));
+	t_li *l = mx_create_l();
 
 	st(&l->un, &l->cur, &l->v, in);
-	while (l->un) {
+	while (l->un && l->un != NULL) {
 		t_md *m = malloc(sizeof(t_md));
 		md(&l->un, &l->cur, matrix, &m);
 		free(m);

@@ -8,11 +8,15 @@ static int mx_count_set(char **arr, char *nIslands) {
 		if (arr[0])
 			count++;
 		for (int i = 1; arr[i] != NULL; i++) {
-			if (mx_isdigit(arr[i][0])) i++;
-			if (arr[i] == NULL) break;
+			if (mx_isdigit(arr[i][0]))
+				i++;
+			if (arr[i] == NULL)
+				break;
 			for (j = i - 1; j >= 0; j--) {
-				if (mx_strcmp(arr[i], arr[j]) == 0) break;
-				if (j == 0) count++;
+				if (mx_strcmp(arr[i], arr[j]) == 0)
+					break;
+				if (j == 0)
+					count++;
 			}
 		}
 	}

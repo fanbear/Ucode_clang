@@ -1,8 +1,10 @@
 #include "path.h"
 
 static void mx_print_invalid(int nline) {
+	char *index = NULL;
+
 	nline++;
-	char *index = mx_itoa(nline);
+	index = mx_itoa(nline);
 	mx_printerr("error: line ");
 	mx_printerr(index);
 	mx_printerr(" isn't valid\n");

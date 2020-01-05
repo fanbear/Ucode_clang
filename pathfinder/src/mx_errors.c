@@ -1,8 +1,10 @@
 #include "path.h"
 
 static void mx_print_invalid(int nline) {
+	char *index = NULL;
+
 	nline++;
-	char *index = mx_itoa(nline);
+	index = mx_itoa(nline + 1);
 	mx_printerr("error: line ");
 	mx_printerr(index);
 	mx_printerr(" isn't valid\n");
@@ -14,16 +16,22 @@ static void mx_checkline(char **lines, int nline) {
 	int copy_i = 0;
 
 	for (int n = 1; n <= nline; n++) {
-		i = 0, copy_i = 0;
-		while(mx_isalpha(lines[n][i])) i++;
+		i = 0;
+		copy_i = 0;
+		while(mx_isalpha(lines[n][i]))
+			i++;
 		if (i == 0 || lines[n][i] != '-')
 			mx_print_invalid(n);
-		i++, copy_i = i;
-		while(mx_isalpha(lines[n][copy_i])) copy_i++;
+		i++;
+		copy_i = i;
+		while(mx_isalpha(lines[n][copy_i]))
+			copy_i++;
 		if (copy_i - i == 0 || lines[n][copy_i] != ',')
 			mx_print_invalid(n);
-		copy_i++, i = copy_i;
-		while(mx_isdigit(lines[n][copy_i])) copy_i++;
+		copy_i++;
+		i = copy_i;
+		while(mx_isdigit(lines[n][copy_i]))
+			copy_i++;
 		if (copy_i - i == 0 || lines[n][copy_i] != '\0') 
 			mx_print_invalid(n);
 	}
@@ -31,9 +39,11 @@ static void mx_checkline(char **lines, int nline) {
 
 static void mx_parserr(char *file) {
 	char **lines = mx_strsplit(file, '\n');
-	int nline = 0, at = 0;
+	int nline = 0;
+	at = 0;
 	
-	while (lines[nline]) nline++;
+	while (lines[nline])
+		nline++;
 	if (lines[0][0] == '0') {
 		mx_printerr("error: zero isn't allowed\n");
 		exit(EXIT_FAILURE);

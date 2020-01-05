@@ -30,7 +30,6 @@ static t_char *createprd(t_path *bond, char **set) {
 	for(; bond; bond = bond->nextBond)
 		i++;
 	prd->s = i;
-
 	return prd;
 }
 static void addNextBond(t_char **prd, t_path *bond, char *distTo, char **set) {

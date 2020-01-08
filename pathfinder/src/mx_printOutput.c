@@ -32,6 +32,7 @@ static t_char *createprd(t_path *bond, char **set) {
 	prd->s = i;
 	return prd;
 }
+
 static void addNextBond(t_char **prd, t_path *bond, char *distTo, char **set) {
 	char *dist = mx_itoa(bond->bondDist);
 
@@ -72,8 +73,6 @@ static void displayPath(t_path **disp, int distTo, char **set) {
 	}
 	mx_strdel(&dist);
 }
-
-
 
 void mx_printOutput(t_island **visited, int root, int size, char **set) {
 	t_island *current = NULL;

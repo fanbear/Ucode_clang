@@ -1,6 +1,5 @@
 #include "path.h"
 
-
 static int mx_flag(char *arr, char ***set1, int i) {
 	int j = 0;
 	int flag = 0;

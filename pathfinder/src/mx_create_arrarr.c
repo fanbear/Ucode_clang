@@ -17,15 +17,18 @@ static void mx_linearr(char *line, char **island1, char **island2, char **dist) 
 	int i = 0;
 	char *str = line;
 
-	while(str[i] != '-') i++;
+	while(str[i] != '-')
+		i++;
 	*island1 = mx_strndup(str, i);
 	str += i + 1;
 	i = 0;
-	while(str[i] != ',') i++;
+	while(str[i] != ',')
+		i++;
 	*island2 = mx_strndup(str, i);
 	str += i + 1;
 	i = 0;
-	while(str[i] != '\0') i++;
+	while(str[i] != '\0')
+		i++;
 	*dist = mx_strndup(str, i);
 }
 

@@ -29,7 +29,6 @@ static t_path *addOnePath(t_path **previous, int isl, int dist) {
 	return res;
 }
 
-
 void mx_pushPath(t_path **path, t_path **previous, int isl, int dist) {
 	t_path *last = *path;
 	t_path *cur = *previous;

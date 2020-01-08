@@ -159,5 +159,4 @@ void mx_print_mat(int **mat, char **set);
 void mx_algo(int **matrix, char **set);
 t_island *mx_shortest(t_island **unvisited);
 
-
 #endif

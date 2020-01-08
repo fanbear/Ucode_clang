@@ -22,8 +22,8 @@ static void mx_fill(char **set, char **arrarr, int ***matrix, t_int *in) {
 
 static void mx_mat(char **set, char **arrarr, int ***matrix) {
 	t_int *i = malloc(sizeof(t_int));
-	i->size = 0;
 
+	i->size = 0;
 	while(set[i->size]) {
 		i->root = 0;
 		while(arrarr[i->root]) {
@@ -43,7 +43,8 @@ int **mx_create_matrix(char **set, char ***arrarr) {
 	int i = 0;
 	int k = 0;
 
-	while(set[i]) i++;
+	while(set[i])
+		i++;
 	k = i;
 	matrix = malloc(sizeof(int*) * i);
 	while(k >= 0) {

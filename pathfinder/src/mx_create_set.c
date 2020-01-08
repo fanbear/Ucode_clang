@@ -41,7 +41,6 @@ static int mx_flag(char *arr, char **set1) {
 	return flag;
 }
 
-
 static void mx_set(char ***set, char ***arrarr) {
 	char **arr = *arrarr;
 	char **set1 = *set;

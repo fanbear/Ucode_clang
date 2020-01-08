@@ -3,6 +3,7 @@
 static void st(t_island **un, t_island **cur, t_island **v, t_int *in) {
 	*un = NULL;
 	*v = NULL;
+
 	for (int i = 0; i < in->size; i++)
 		mx_pI(&(*un), NULL, i, 0);  // заполнение пустыми нодами
 	*cur = *un;
@@ -54,10 +55,11 @@ static void lt(t_li **l, int **matrix, char **set) {
 
 static void deixtra(int **matrix, char **set, t_int *in) {
 	t_li *l = mx_create_l();
+	t_md *m = NULL;
 
 	st(&l->un, &l->cur, &l->v, in);
 	while (l->un && l->un != NULL) {
-		t_md *m = malloc(sizeof(t_md));
+		m = malloc(sizeof(t_md));
 		md(&l->un, &l->cur, matrix, &m);
 		free(m);
 		m = NULL;

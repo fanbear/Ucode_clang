@@ -1,6 +1,5 @@
 #include "path.h"
 
-
 static void addLink(t_path **cur, t_path **new) {
 	t_path *current = *cur;
 
@@ -46,4 +45,3 @@ t_path *mx_copyPath(t_path **data) {
 	}
 	return res;
 }
-

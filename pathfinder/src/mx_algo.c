@@ -3,9 +3,9 @@
 static void st(t_island **un, t_island **cur, t_island **v, t_int *in) {
 	*un = NULL;
 	*v = NULL;
-
+	
 	for (int i = 0; i < in->size; i++)
-		mx_pI(&(*un), NULL, i, 0);  // заполнение пустыми нодами
+		mx_pI(&(*un), NULL, i, 0);
 	*cur = *un;
 	while((*cur)->currentIsl != in->root)
 		*cur = (*cur)->next;
@@ -44,14 +44,11 @@ static void lt(t_li **l, int **matrix, char **set) {
 	mx_pop_middle_island(&(*l)->un, (*l)->sh->currentIsl);
 	(*l)->cur = (*l)->cur->next;
 	if ((*l)->cur->path == NULL) {
-		matrix[0][0] = 0;
-		set[0] = set[0];
-		// mx_delMat(&matrix, set);
+		mx_delMat(&matrix, set);
 		mx_printerr("error: two islands has not a path between them\n");
 		exit(EXIT_FAILURE);
 	}
 }
-
 
 static void deixtra(int **matrix, char **set, t_int *in) {
 	t_li *l = mx_create_l();

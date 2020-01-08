@@ -4,11 +4,26 @@ static void mx_print_invalid(int nline) {
 	char *index = NULL;
 
 	nline++;
-	index = mx_itoa(nline + 1);
+	index = mx_itoa(nline);
 	mx_printerr("error: line ");
 	mx_printerr(index);
 	mx_printerr(" isn't valid\n");
 	exit(EXIT_FAILURE);
+}
+
+static void checkLnSec(char **lines, int n, int i) {
+	int copy_i = i;
+
+	while(mx_isalpha(lines[n][copy_i]))
+			copy_i++;
+	if (copy_i - i == 0 || lines[n][copy_i] != ',')
+		mx_print_invalid(n);
+	copy_i++;
+	i = copy_i;
+	while(mx_isdigit(lines[n][copy_i]))
+		copy_i++;
+	if (copy_i - i == 0 || lines[n][copy_i] != '\0') 
+		mx_print_invalid(n);
 }
 
 static void mx_checkline(char **lines, int nline) {
@@ -23,24 +38,14 @@ static void mx_checkline(char **lines, int nline) {
 		if (i == 0 || lines[n][i] != '-')
 			mx_print_invalid(n);
 		i++;
-		copy_i = i;
-		while(mx_isalpha(lines[n][copy_i]))
-			copy_i++;
-		if (copy_i - i == 0 || lines[n][copy_i] != ',')
-			mx_print_invalid(n);
-		copy_i++;
-		i = copy_i;
-		while(mx_isdigit(lines[n][copy_i]))
-			copy_i++;
-		if (copy_i - i == 0 || lines[n][copy_i] != '\0') 
-			mx_print_invalid(n);
+		checkLnSec(lines, n, i);
 	}
 }
 
 static void mx_parserr(char *file) {
 	char **lines = mx_strsplit(file, '\n');
 	int nline = 0;
-	at = 0;
+	int at = 0;
 	
 	while (lines[nline])
 		nline++;
@@ -61,7 +66,6 @@ static void mx_parserr(char *file) {
 }
 
 void mx_errors(int argc, char *file, char **argv) {
-
 	if (argc != 2) {
 		mx_printerr("usage: ./pathfinder [filename]\n");
 		exit(EXIT_FAILURE);

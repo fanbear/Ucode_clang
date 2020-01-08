@@ -6,7 +6,7 @@
 #include <stdlib.h>
 #include <stdbool.h>
 #include <wchar.h>
-#include <malloc.h>
+#include <malloc/malloc.h>
 #include <fcntl.h>
 // #include "libmx.h"
 
@@ -133,6 +133,7 @@ typedef struct s_li{
 	t_island *sh;
 }		t_li;
 
+void mx_count_set(char **arr, char *nIslands, int *count);
 t_li *mx_create_l();
 t_island *mx_create_island(int isl, int dist);
 void mx_pI(t_island **island, t_path **path, int isl, int dist);

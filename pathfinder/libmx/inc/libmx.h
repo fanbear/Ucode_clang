@@ -29,7 +29,6 @@ void mx_printstr(const char *s);
 void mx_print_strarr(char **arr, const char *delim);
 void mx_printint(int n);
 double mx_pow(double n, unsigned int pow);
-int mx_sqrt(int x);
 char *mx_nbr_to_hex(unsigned long nbr);
 unsigned long mx_hex_to_nbr(const char *hex);
 char *mx_itoa(int number);
@@ -58,12 +57,9 @@ int mx_count_substr(const char *str, const char *sub);
 int mx_count_words(const char *str, char c);
 char *mx_strnew(const int size);
 char *mx_strtrim(const char *str);
-char *mx_del_extra_spaces(const char *str);
 char **mx_strsplit(const char *s, char c);
 char *mx_strjoin(const char *s1, const char *s2);
 char *mx_file_to_str(const char *file);
-int mx_read_line(char **lineptr, int buf_size, char delim, const int fd);
-char *mx_replace_substr(const char *str, const char *sub, const char *replace);
 
 // Memory pack
 

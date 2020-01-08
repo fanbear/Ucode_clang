@@ -9,13 +9,13 @@ static void mx_fill(char **set, char **arrarr, int ***matrix, t_int *in) {
 	if(mx_isdigit(arrarr[j + 1][0])) {
 		while(mx_strcmp(set[k], arrarr[j-1]) != 0)
 			k++;
-		if (!mat[i][k] || mat[i][k] < mx_atoi(arrarr[j+1]))
+		if (!mat[i][k] || mat[i][k] > mx_atoi(arrarr[j+1]))
 			mat[i][k] = mx_atoi(arrarr[j+1]);
 	}
 	else {
 		while(mx_strcmp(set[k], arrarr[j+1]) != 0)
 			k++;
-		if (!mat[i][k] || mat[i][k] < mx_atoi(arrarr[j+1]))
+		if (!mat[i][k] || mat[i][k] > mx_atoi(arrarr[j+2]))
 			mat[i][k] = mx_atoi(arrarr[j+2]);
 	}
 }

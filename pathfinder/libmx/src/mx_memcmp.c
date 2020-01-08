@@ -7,7 +7,8 @@ int mx_memcmp(const void *s1, const void *s2, size_t n) {
 	while(n--) {
 		if (*s11 != *s22)
 			return *s11 - *s22;
-		s11++, s22++;
+		s11++;
+		s22++;
 	}
 	return 0;
 }

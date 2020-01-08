@@ -1,7 +1,6 @@
 #include "libmx.h"
 
 void *mx_memccpy(void *restrict dst, const void *restrict src, int c, size_t n) {
-
 	char *dt = dst;
 	const char *sc = src;
 
@@ -11,7 +10,9 @@ void *mx_memccpy(void *restrict dst, const void *restrict src, int c, size_t n) 
 			dt++;
 			return dt;
 		}
-		dt++, sc++, n--;
+		dt++;
+		sc++;
+		n--;
 	}
 	return NULL;
 }

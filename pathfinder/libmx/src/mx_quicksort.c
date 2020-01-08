@@ -2,6 +2,7 @@
 
 static void swap(char **a, char **b) {
     char *temp = *a;
+
     *a = *b;
     *b = temp;
 }
@@ -10,10 +11,10 @@ static int partition(char **arr, int left, int right, int *count) {
     int l = left;
     int r = right;
     char *pivot = arr[left + (right - left) / 2];
+
     while (l <= r) {
-        while (mx_strlen(arr[l]) < mx_strlen(pivot)) {
+        while (mx_strlen(arr[l]) < mx_strlen(pivot))
             l++;
-        }
         while (mx_strlen(arr[r]) > mx_strlen(pivot)) {
             r--;
         }
@@ -29,14 +30,13 @@ static int partition(char **arr, int left, int right, int *count) {
     return l;
 }
 
-
 int mx_quicksort(char **arr, int left, int right) {
-    if (!arr) {
-        return -1;
-    }
     int count = 0;
-    int pi = partition(arr, left, right, &count);
+    int pi;
 
+    if (!arr)
+        return -1;
+    pi = partition(arr, left, right, &count);
     if (left < pi - 1) {
         count += mx_quicksort(arr, left, pi - 1);
     }
@@ -45,4 +45,3 @@ int mx_quicksort(char **arr, int left, int right) {
     }
     return count;
 }
-

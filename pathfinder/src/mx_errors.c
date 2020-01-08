@@ -7,7 +7,7 @@ static void mx_print_invalid(int nline) {
 	index = mx_itoa(nline);
 	mx_printerr("error: line ");
 	mx_printerr(index);
-	mx_printerr(" isn't valid\n");
+	mx_printerr(" is not valid\n");
 	exit(EXIT_FAILURE);
 }
 
@@ -50,12 +50,12 @@ static void mx_parserr(char *file) {
 	while (lines[nline])
 		nline++;
 	if (lines[0][0] == '0') {
-		mx_printerr("error: zero isn't allowed\n");
+		mx_printerr("error: line 1 is not valid\n");
 		exit(EXIT_FAILURE);
 	}
 	while (lines[0][at]) {
 		if (!mx_isdigit(lines[0][at])) {
-			mx_printerr("error: line 1 isn't valid\n");
+			mx_printerr("error: line 1 is not valid\n");
 			exit(EXIT_FAILURE);
 		}
 		at++;
@@ -73,7 +73,7 @@ void mx_errors(int argc, char *file, char **argv) {
 	if (!file) {
 		 mx_printerr("error: file ");
 		 mx_printerr(argv[1]);
-		 mx_printerr(" doesn't exist\n");
+		 mx_printerr(" does not exist\n");
 		 exit(EXIT_FAILURE);
 	}
 	if (mx_strlen(file) == 0) {

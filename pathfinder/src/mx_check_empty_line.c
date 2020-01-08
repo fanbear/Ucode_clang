@@ -7,7 +7,7 @@ static void mx_print_invalid(int nline) {
 	index = mx_itoa(nline);
 	mx_printerr("error: line ");
 	mx_printerr(index);
-	mx_printerr(" isn't valid\n");
+	mx_printerr(" is not valid\n");
 	exit(EXIT_FAILURE);
 }
 

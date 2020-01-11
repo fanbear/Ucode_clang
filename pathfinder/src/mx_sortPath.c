@@ -11,7 +11,7 @@ static void addLink(t_path **cur, t_path **new) {
 }
 
 static int cmp(t_path *bond, t_path *fast) {
-	while (bond->nextBond && fast->nextBond) {
+	while (bond && fast) {
 		if (bond->bondIsl > fast->bondIsl)
 			return 1;
 		if (bond->bondIsl < fast->bondIsl)
@@ -19,7 +19,7 @@ static int cmp(t_path *bond, t_path *fast) {
 		bond = bond->nextBond;
 		fast = fast->nextBond;
 	}
-	if (bond->nextBond && !fast->nextBond)
+	if (bond && !fast)
 		return 1;
 	return 0;
 }
@@ -66,7 +66,9 @@ void mx_sortPath(t_path **disp, int sizeP) {
 	t_path *fast = (*disp)->nextPath;
 
 	for(int i = 0; i < sizeP; i++) {
-		for (bond = *disp; bond->index != i; bond = bond->nextPath)
+		bond = *disp;
+		fast = bond->nextPath;
+		for (; bond->index != i; bond = bond->nextPath)
 			fast = bond->nextPath;
 		while(fast) {
 			if (cmp(bond, fast) == 1) {

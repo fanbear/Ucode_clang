@@ -25,7 +25,7 @@ char *mx_file_to_str(const char *file) {
     char *target_str = NULL;
 
     file_length = mx_get_file_length(file);
-    if (file_length > 0) {
+    if (file_length >= 0) {
         target_str = mx_strnew(file_length);
         if (!target_str)
             return NULL;

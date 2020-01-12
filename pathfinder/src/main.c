@@ -1,6 +1,5 @@
 #include "path.h"
 
-
 int main(int argc, char *argv[]) {
 	int **matrix = NULL;
 	char **set = NULL;
